@@ -7,9 +7,9 @@ mkdir -p wasm/dist
 emmake make -j
 FLAGS=(
   -I. -I./fftools -I$BUILD_DIR/include
-  -Llibavcodec -Llibavdevice -Llibavfilter -Llibavformat -Llibavresample -Llibavutil -Lharfbuzz -Llibass -Lfribidi -Llibpostproc -Llibswscale -Llibswresample -L$BUILD_DIR/lib
+  -Llibavcodec -Llibavdevice -Llibavfilter -Llibavformat -Llibavresample -Llibavutil -Llibpostproc -Llibswscale -Llibswresample -L$BUILD_DIR/lib
   -Wno-deprecated-declarations -Wno-pointer-sign -Wno-implicit-int-float-conversion -Wno-switch -Wno-parentheses -Qunused-arguments
-  -lavdevice -lavfilter -lavformat -lavcodec -lswresample -lswscale -lavutil -lpostproc -lm -lharfbuzz -lfribidi -llibass -lx264 -lx265 -lvpx -lwavpack -lmp3lame -lfdk-aac -lvorbis -lvorbisenc -lvorbisfile -logg -ltheora -ltheoraenc -ltheoradec -lz -lfreetype -lopus -lwebp -pthread
+  -lavdevice -lavfilter -lavformat -lavcodec -lswresample -lswscale -lavutil -lpostproc -lm -lwavpack -lmp3lame -lfdk-aac -lvorbis -lvorbisenc -lvorbisfile -logg -lz -lopus -pthread
   fftools/ffmpeg_opt.c fftools/ffmpeg_filter.c fftools/ffmpeg_hw.c fftools/cmdutils.c fftools/ffmpeg.c
   -o wasm/dist/ffmpeg-core.js
   -s USE_SDL=2                                  # use SDL2
@@ -21,7 +21,7 @@ FLAGS=(
   -s EXPORT_NAME="createFFmpegCore"             # assign export name for browser
   -s EXPORTED_FUNCTIONS="[_main, _proxy_main]"  # export main and proxy_main funcs
   -s EXTRA_EXPORTED_RUNTIME_METHODS="[FS, cwrap, ccall, setValue, writeAsciiToMemory]"   # export preamble funcs
-  -s INITIAL_MEMORY=2146435072                  # 64 KB * 1024 * 16 * 2047 = 2146435072 bytes ~= 2 GB
+  -s INITIAL_MEMORY=1073217536                  # 64 KB * 1024 * 16 * 2047 = 2146435072 bytes ~= 2 GB
   --post-js wasm/post-js.js
   $OPTIM_FLAGS
 )
